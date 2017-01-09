@@ -1,8 +1,8 @@
 {
-  "name": "execut/yii2-migration",
-  "description": "Yii2 helper to simplify of writing migration",
+  "name": "execut/yii2-navigation",
+  "description": "Widgets and components for simplify navigation ",
   "keywords": ["yii2"],
-  "homepage": "https://github.com/execut/yii2-migration",
+  "homepage": "https://github.com/execut/yii2-navigation",
   "type": "yii2-extension",
   "license": "Apache-2.0",
   "authors": [
@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "execut\\yii\\migration\\": ""
+      "execut\\yii\\navigation\\": ""
     }
   }
 }
