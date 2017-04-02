@@ -6,7 +6,7 @@
  * Time: 11:42
  */
 
-namespace execut\yii\navigation\behaviors\navigation;
+namespace execut\navigation\behaviors\navigation;
 
 use yii\base\Component;
 use yii\helpers\ArrayHelper;

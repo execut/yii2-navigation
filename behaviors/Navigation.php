@@ -5,7 +5,7 @@
  * Time: 15:56
  */
 
-namespace execut\yii\navigation\behaviors;
+namespace execut\navigation\behaviors;
 
 use yii\base\Behavior;
 
