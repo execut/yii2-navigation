@@ -6,7 +6,7 @@
  * Time: 14:33
  */
 
-namespace execut\yii\navigation\widgets;
+namespace execut\navigation\widgets;
 
 use yii\base\Widget;
 
