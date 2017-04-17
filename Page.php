@@ -6,7 +6,7 @@
  * Time: 11:42
  */
 
-namespace execut\navigation\behaviors\navigation;
+namespace execut\navigation;
 
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
@@ -114,6 +114,13 @@ class Page extends Component
     public function setName($name)
     {
         $this->name = $name;
+        if ($this->title === null) {
+            $this->title = $name;
+        }
+
+        if ($this->header === null) {
+            $this->header = $name;
+        }
     }
 
     /**

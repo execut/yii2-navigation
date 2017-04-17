@@ -5,11 +5,11 @@
  * Time: 15:56
  */
 
-namespace execut\navigation\behaviors;
+namespace execut\navigation;
 
-use yii\base\Behavior;
+use yii\base\Behavior as BehaviorBase;
 
-class Navigation extends Behavior {
+class Behavior extends BehaviorBase {
     public $params = [];
     protected $pages = null;
     public function init() {
@@ -43,6 +43,10 @@ class Navigation extends Behavior {
     public function setPages($pages) {
         foreach ($pages as $key => $page) {
             if (is_array($page)) {
+                if (!isset($page['class'])) {
+                    $page['class'] = Page::class;
+                }
+
                 $pages[$key] = \yii::createObject($page);
             }
         }

@@ -6,7 +6,7 @@
  * Time: 13:54
  */
 
-namespace execut\yii\navigation\widgets;
+namespace execut\navigation\widgets;
 
 
 use execut\yii\helpers\ArrayHelper;
