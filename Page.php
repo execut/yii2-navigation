@@ -12,7 +12,7 @@ use yii\base\Component;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
-class Page extends Component
+class Page extends Component implements BasePage
 {
     protected $title = null;
     protected $keywords = [];
@@ -21,51 +21,7 @@ class Page extends Component
     protected $header = null;
     protected $name = null;
     protected $url = null;
-    protected $breadcrumbs = null;
-
-    /**
-     * @return null
-     */
-    public function getBreadcrumbs()
-    {
-        return $this->breadcrumbs;
-    }
-
-    /**
-     * @param null $breadcrumbs
-     */
-    public function setBreadcrumbs($breadcrumbs)
-    {
-        $this->breadcrumbs = $breadcrumbs;
-    }
-
-    protected const PARAMS_ATTRIBUTES = [
-        'title',
-        'keywords',
-        'description',
-        'text',
-        'header',
-        'name',
-        'url',
-        'breadcrumbs',
-    ];
-
-    public function setParams($params) {
-        foreach ($params as $param => $value) {
-            $method = 'set' . ucfirst($param);
-            $this->$method($value);
-        }
-    }
-
-    public function getParams() {
-        $result = [];
-        foreach (self::PARAMS_ATTRIBUTES as $attribute) {
-            $method = 'get' . ucfirst($attribute);
-            $result[$attribute] = $this->$method();
-        }
-
-        return $result;
-    }
+    protected $parentPage = null;
 
     /**
      * @return null
@@ -197,6 +153,22 @@ class Page extends Component
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return null
+     */
+    public function getParentPage()
+    {
+        return $this->parentPage;
+    }
+
+    /**
+     * @param null $title
+     */
+    public function setParentPage($page)
+    {
+        $this->parentPage = $page;
     }
 
     protected function replaceTemplate($template) {

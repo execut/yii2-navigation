@@ -8,7 +8,7 @@
 
 namespace execut\navigation\widgets;
 
-use yii\base\InvalidConfigException;
+use execut\navigation\Page;
 use yii\helpers\Url;
 
 class Breadcrumbs extends \yii\widgets\Breadcrumbs {
@@ -27,53 +27,36 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
     public $homeLink = false;
     public function init() {
         parent::init();
-//        var_dump($this->options);
-//        exit;
-        if (!isset(\yii::$app->params['breadcrumbs']['Home page']) && !isset(\yii::$app->params['breadcrumbs']['Главная'])) {
-            $breadcrumbs = ['Главная' => '/'];
-        } else {
-            $breadcrumbs = [];
-        }
-
-        if (!empty(\yii::$app->params['breadcrumbs'])) {
-            $breadcrumbs = array_merge($breadcrumbs, \yii::$app->params['breadcrumbs']);
-        }
-//        else {
-//            $breadcrumbs = \YiiOld::app()->controller->getBreadcrumbs();
-//        }
-
-        $links = [];
         $position = 1;
-        foreach ($breadcrumbs as $url => $name) {
-            $link = [
+        $links = \yii::$app->navigation->getBreadcrumbsLinks();
+        foreach ($links as $key => $link) {
+            $link = array_merge([
                 'itemscope' => '',
                 'itemtype' => 'http://schema.org/Thing',
                 'itemprop' => 'item',
-            ];
-            if (is_string($url)) {
-                $label = $url;
-                $link['url'] = Url::to(trim($name), true);
-            } else {
-                $label = trim($name);
+            ], $link);
+
+            if (!empty($link['label'])) {
+                $link['label'] = '<span  itemprop="name">' . $link['label'] . '</span>';
             }
 
-            $label = trim($label);
-
-            $link['label'] = '<span  itemprop="name">' . $label . '</span>';
             $position++;
-            $links[] = $link;
+            $links[$key] = $link;
         }
-
-//        unset($links[count($links) - 1]['url']);
 
         $this->links = $links;
     }
 
-    public function run() {
-        \yii::$app->params['disableBreadcrumbs'] = true;
-//        BreadcrumbsAsset::register($this->view);
-
-        return parent::run();
+    /**
+     * @return mixed
+     */
+    protected function getActivePage()
+    {
+        /**
+         * @var Page
+         */
+        $page = \yii::$app->navigation->getActivePage();
+        return $page;
     }
 
     protected $position = 1;

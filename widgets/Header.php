@@ -8,19 +8,19 @@
 
 namespace execut\navigation\widgets;
 
+use execut\pages\models\Page;
 use yii\base\Widget;
 
 class Header extends Widget
 {
-    protected static $isRendered = false;
+    public $header = null;
     public function run() {
-        if (self::$isRendered) {
-            return;
+        if ($this->header === null) {
+            $this->header = \yii::$app->navigation->getHeader();
         }
 
-        self::$isRendered = true;
-        if (isset(\yii::$app->params['header'])) {
-            echo '<h1>' . \yii::$app->params['header'] . '</h1>';
+        if (!empty($this->header)) {
+            return '<h1>' . $this->header . '</h1>';
         }
     }
 }

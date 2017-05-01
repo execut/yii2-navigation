@@ -9,10 +9,9 @@ class PageTest extends TestCase
 {
     public function testSetName() {
         $name = 'test';
-        $page = new Page([
-            'name' => $name,
-        ]);
-        $this->assertEquals($name, $page->title);
-        $this->assertEquals($name, $page->header);
+        $page = new Page();
+        $page->setName('test');
+        $this->assertEquals($name, $page->getTitle());
+        $this->assertEquals($name, $page->getHeader());
     }
 }
