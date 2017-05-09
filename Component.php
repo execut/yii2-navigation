@@ -88,7 +88,7 @@ class Component extends BaseComponent
 
     public function addMenuItem($item) {
         foreach ($this->menuItems as &$currentItem) {
-            if ($item['label'] === $currentItem['label']) {
+            if (is_array($currentItem) && is_array($item) && $item['label'] === $currentItem['label']) {
                 if (empty($currentItem['items'])) {
                     $currentItem['items'] = [];
                 }
@@ -99,6 +99,8 @@ class Component extends BaseComponent
         }
 
         $this->menuItems[] = $item;
+
+        return $this;
     }
 
     public function getMenuItems() {
