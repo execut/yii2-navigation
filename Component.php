@@ -12,13 +12,19 @@ class Component extends BaseComponent
     /**
      * @var Page|null
      */
-    public $activePage = null;
+    protected $_activePage = null;
     public $menuItems = [];
     protected $configurators = [];
     /**
      * @var Page[]
      */
     public $pages = [];
+
+    public function getActivePage() {
+        $this->configure();
+
+        return $this->_activePage;
+    }
 
     public function addConfigurator($configurator) {
         if (is_array($configurator)) {
@@ -41,20 +47,26 @@ class Component extends BaseComponent
     }
 
     public function getTitle() {
-        if ($page = $this->activePage) {
+        if ($page = $this->getActivePage()) {
             return $page->getTitle();
         }
     }
 
     public function getHeader() {
-        if ($page = $this->activePage) {
+        if ($page = $this->getActivePage()) {
             return $page->getHeader();
         }
     }
 
     public function getText() {
-        if ($page = $this->activePage) {
+        if ($page = $this->getActivePage()) {
             return $page->getText();
+        }
+    }
+
+    public function getTime() {
+        if ($page = $this->getActivePage()) {
+            return $page->getTime();
         }
     }
 
@@ -67,7 +79,7 @@ class Component extends BaseComponent
             $page = \yii::createObject($page);
         }
 
-        $this->activePage = $page;
+        $this->_activePage = $page;
         $this->pages[] = $page;
 
         return $this;
@@ -82,6 +94,8 @@ class Component extends BaseComponent
                 'url' => $page->getUrl(),
             ];
         }
+
+        $breadcrumbsLinks[count($breadcrumbsLinks) - 1]['active'] = true;
 
         return $breadcrumbsLinks;
     }
@@ -110,7 +124,7 @@ class Component extends BaseComponent
 
     public function initMetatags() {
         $this->configure();
-        $page = $this->activePage;
+        $page = $this->getActivePage();
         $keywords = $page->getKeywords();
         if (!empty($keywords)) {
             \yii::$app->view->registerMetaTag([
@@ -124,32 +138,4 @@ class Component extends BaseComponent
             \yii::$app->view->registerMetaTag(['name' => 'description', 'content' => $description]);
         }
     }
-
-//    public function getMenuItems() {
-//        return [
-//            ['label' => 'Home', 'url' => '/'],
-//
-//            ['label' => 'Pages', 'url' => ['/pages/backend']],
-//
-//            ['label' => 'Menus', 'url' => ['/menus/backend']],
-//        ];
-//
-//        $menuItems = [
-//            ['label' => 'Home', 'url' => ['/site/index']],
-//        ];
-//        if (\Yii::$app->user->isGuest) {
-//            $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-//        } else {
-//            $menuItems[] = '<li>'
-//                . Html::beginForm(['/site/logout'], 'post')
-//                . Html::submitButton(
-//                    'Logout (' . \Yii::$app->user->identity->username . ')',
-//                    ['class' => 'btn btn-link logout']
-//                )
-//                . Html::endForm()
-//                . '</li>';
-//        }
-//
-//        return $menuItems;
-//    }
 }

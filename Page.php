@@ -21,6 +21,7 @@ class Page extends Component implements BasePage
     protected $header = null;
     protected $name = null;
     protected $url = null;
+    protected $time = null;
     protected $parentPage = null;
 
     /**
@@ -153,6 +154,22 @@ class Page extends Component implements BasePage
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return null
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * @param null $Time
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
     }
 
     /**

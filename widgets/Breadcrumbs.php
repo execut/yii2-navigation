@@ -9,26 +9,34 @@
 namespace execut\navigation\widgets;
 
 use execut\navigation\Page;
-use yii\helpers\Url;
+use Yii;
+use yii\helpers\Html;
 
 class Breadcrumbs extends \yii\widgets\Breadcrumbs {
-    public $itemTemplate = '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></li>';
+    public $itemTemplate = '<{itemTag} itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></{itemTag}>{delimiter}';
     /**
      * @var string the template used to render each active item in the breadcrumbs. The token `{link}`
      * will be replaced with the actual HTML link for each active item.
      */
-    public $activeItemTemplate = '<li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></li>';
+    public $activeItemTemplate = '<{itemTag} class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></{itemTag}>';
     public $encodeLabels = false;
     public $options = [
         'class' => 'breadcrumb pull-right',
         'itemtype' => 'http://schema.org/BreadcrumbList',
         'itemscope' => '',
     ];
+    public $itemTag = 'li';
+    public $delimiter = '';
     public $homeLink = false;
+    public $isRenderAlone = false;
     public function init() {
         parent::init();
         $position = 1;
         $links = \yii::$app->navigation->getBreadcrumbsLinks();
+        if (count($links) <= 1 && !$this->isRenderAlone) {
+            return;
+        }
+
         foreach ($links as $key => $link) {
             $link = array_merge([
                 'itemscope' => '',
@@ -48,6 +56,32 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
     }
 
     /**
+     * Renders the widget.
+     */
+    public function run()
+    {
+        if (empty($this->links)) {
+            return;
+        }
+        $links = [];
+        if ($this->homeLink === null) {
+            $links[] = $this->renderItem([
+                'label' => Yii::t('yii', 'Home'),
+                'url' => Yii::$app->homeUrl,
+            ], $this->itemTemplate);
+        } elseif ($this->homeLink !== false) {
+            $links[] = $this->renderItem($this->homeLink, $this->itemTemplate);
+        }
+        foreach ($this->links as $link) {
+            if (!is_array($link)) {
+                $link = ['label' => $link];
+            }
+            $links[] = $this->renderItem($link, !isset($link['active']) ? $this->itemTemplate : $this->activeItemTemplate);
+        }
+        echo Html::tag($this->tag, implode('', $links), $this->options);
+    }
+
+    /**
      * @return mixed
      */
     protected function getActivePage()
@@ -63,6 +97,6 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
     public function renderItem($link, $template)
     {
         $template = parent::renderItem($link, $template);
-        return strtr($template, ['{position}' => $this->position++]);
+        return strtr($template, ['{position}' => $this->position++, '{delimiter}' => $this->delimiter, '{itemTag}' => $this->itemTag]);
     }
 }

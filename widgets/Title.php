@@ -10,6 +10,7 @@ namespace execut\navigation\widgets;
 
 use execut\pages\models\Page;
 use yii\base\Widget;
+use yii\helpers\Html;
 
 class Title extends Widget
 {
@@ -20,7 +21,7 @@ class Title extends Widget
         }
 
         if (!empty($this->title)) {
-            return '<title>' . $this->title . '</title>';
+            return '<title>' . Html::encode($this->title) . '</title>';
         }
     }
 }
