@@ -8,11 +8,11 @@
 
 namespace execut\navigation;
 
-use yii\base\Component;
+use yii\base\Component as BaseComponent;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
-class Page extends Component implements BasePage
+class Page extends BaseComponent implements BasePage
 {
     protected $title = null;
     protected $keywords = [];
