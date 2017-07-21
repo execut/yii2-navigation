@@ -125,6 +125,10 @@ class Component extends BaseComponent
     public function initMetatags() {
         $this->configure();
         $page = $this->getActivePage();
+        if (!$page) {
+            return;
+        }
+
         $keywords = $page->getKeywords();
         if (!empty($keywords)) {
             \yii::$app->view->registerMetaTag([

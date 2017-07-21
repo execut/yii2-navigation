@@ -7,17 +7,30 @@ namespace execut\navigation;
 
 use yii\base\BootstrapInterface;
 
-class Bootstrap implements BootstrapInterface
+class Bootstrap extends \execut\yii\Bootstrap
 {
+    public $defaultDepends = [
+        'components' => [
+            'navigation' => [
+                'class' => Component::class,
+            ],
+        ],
+    ];
+
     public function bootstrap($app)
     {
-//        \yii::$container->set(Breadcrumbs::class, [
-//            'class' => \execut\navigation\widgets\Breadcrumbs::class,
-//            'links' => $this->getLinks(),
-//        ]);
-//
-//        \yii::$container->set(Header::class, [
-//            'header' => $this->getHeader(),
-//        ]);
+        parent::bootstrap($app);
+        $this->registerTranslations($app);
+    }
+
+    public function registerTranslations($app) {
+        $app->i18n->translations['execut/navigation/'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'sourceLanguage' => 'en-US',
+            'basePath' => '@vendor/execut/yii2-navigation/messages',
+            'fileMap' => [
+                'execut/navigation/' => 'navigation.php',
+            ],
+        ];
     }
 }

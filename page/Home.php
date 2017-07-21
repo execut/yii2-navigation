@@ -11,7 +11,7 @@ class Home extends Page
     public function __construct($config = [])
     {
         parent::__construct($config);
-        $this->setName('Home');
+        $this->setName(\yii::t('execut/navigation/', 'Home'));
         $this->setUrl('/');
         $this->setUrl('/');
     }
