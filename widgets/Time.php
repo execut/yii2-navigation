@@ -21,7 +21,8 @@ class Time extends Widget
         }
 
         if (!empty($this->time)) {
-            return '<time datetime="' . date('Y-m-dTH:I:S', $this->time) . '" pubdate>' . date('d F Y', $this->time) . '</time>';
+            $date = date('Y-m-d\TH:i:s', $this->time);
+            return '<time datetime="' . $date . '" pubdate>' . date('d F Y', $this->time) . '</time>';
         }
     }
 }
