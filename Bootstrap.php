@@ -4,9 +4,6 @@
 
 namespace execut\navigation;
 
-
-use yii\base\BootstrapInterface;
-
 class Bootstrap extends \execut\yii\Bootstrap
 {
     public $defaultDepends = [
