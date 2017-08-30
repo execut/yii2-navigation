@@ -22,9 +22,13 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
     public $encodeLabels = false;
     public $options = [
         'class' => 'breadcrumb pull-right',
+    ];
+
+    public $microdataOptions = [
         'itemtype' => 'http://schema.org/BreadcrumbList',
         'itemscope' => '',
     ];
+
     public $itemTag = 'li';
     public $delimiter = '';
     public $homeLink = false;
@@ -76,9 +80,12 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
             if (!is_array($link)) {
                 $link = ['label' => $link];
             }
-            $links[] = $this->renderItem($link, !isset($link['active']) ? $this->itemTemplate : $this->activeItemTemplate);
+
+            $isActive = isset($link['active']);
+            unset($link['active']);
+            $links[] = $this->renderItem($link, !$isActive ? $this->itemTemplate : $this->activeItemTemplate);
         }
-        echo Html::tag($this->tag, implode('', $links), $this->options);
+        echo Html::tag($this->tag, implode('', $links), array_merge($this->options, $this->microdataOptions));
     }
 
     /**
