@@ -22,7 +22,7 @@ class Time extends Widget
 
         if (!empty($this->time)) {
             $date = date('Y-m-d\TH:i:s', $this->time);
-            return '<time datetime="' . $date . '" pubdate>' . date('d F Y', $this->time) . '</time>';
+            return '<time datetime="' . $date . '" itemprop="datePublished">' . date('d F Y', $this->time) . '</time>';
         }
     }
 }
