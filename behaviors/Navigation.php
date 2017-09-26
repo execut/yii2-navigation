@@ -52,7 +52,7 @@ class Navigation extends Behavior {
             $breadcrumbs[$page->name] = $page->url;
         }
 
-        $params = $page->getParams();
+        $params = &\yii::$app->params;
         $params['breadcrumbs'] = $breadcrumbs;
         $this->pages = $pages;
 
