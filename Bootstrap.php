@@ -4,6 +4,10 @@
 
 namespace execut\navigation;
 
+use yii\base\Event;
+use yii\web\Controller;
+use yii\web\View;
+
 class Bootstrap extends \execut\yii\Bootstrap
 {
     public $defaultDepends = [
@@ -18,6 +22,9 @@ class Bootstrap extends \execut\yii\Bootstrap
     {
         parent::bootstrap($app);
         $this->registerTranslations($app);
+        Event::on(View::class, View::EVENT_END_BODY, function () {
+            \yii::$app->navigation->initMetaTags();
+        });
     }
 
     public function registerTranslations($app) {

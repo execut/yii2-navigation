@@ -15,15 +15,40 @@ class Component extends BaseComponent
     protected $_activePage = null;
     public $menuItems = [];
     protected $configurators = [];
-    /**
-     * @var Page[]
-     */
-    public $pages = [];
+
+    public function setActivePage($page) {
+        $page = $this->createPage($page);
+
+        $this->_activePage = $page;
+        return $this;
+    }
+
+    public function addPages($pages) {
+        foreach ($pages as $page) {
+            $this->addPage($page);
+        }
+    }
+
+    public function addPage($page) {
+        $page = $this->createPage($page);
+        $activePage = $this->getActivePage();
+        if ($activePage) {
+            $page->setParentPage($activePage);
+        }
+
+        $this->setActivePage($page);
+    }
 
     public function getActivePage() {
         $this->configure();
 
         return $this->_activePage;
+    }
+
+    public function setConfigurators($configurators) {
+        foreach ($configurators as $configurator) {
+            $this->addConfigurator($configurator);
+        }
     }
 
     public function addConfigurator($configurator) {
@@ -70,30 +95,20 @@ class Component extends BaseComponent
         }
     }
 
-    public function addPage($page) {
-        if (is_array($page)) {
-            if (empty($page['class'])) {
-                $page['class'] = Page::class;
-            }
-
-            $page = \yii::createObject($page);
-        }
-
-        $this->_activePage = $page;
-        $this->pages[] = $page;
-
-        return $this;
-    }
-
     public function getBreadcrumbsLinks() {
         $this->configure();
         $breadcrumbsLinks = [];
-        foreach ($this->pages as $page) {
+        $page = $this->getActivePage();
+        while ($page) {
             $breadcrumbsLinks[] = [
                 'label' => $page->getName(),
                 'url' => $page->getUrl(),
             ];
+
+            $page = $page->getParentPage();
         }
+
+        $breadcrumbsLinks = array_reverse($breadcrumbsLinks);
 
         $breadcrumbsLinks[count($breadcrumbsLinks) - 1]['active'] = true;
 
@@ -122,8 +137,13 @@ class Component extends BaseComponent
         return $this->menuItems;
     }
 
-    public function initMetatags() {
-        $this->configure();
+    protected $metaTagsIsInited = false;
+    public function initMetaTags() {
+        if ($this->metaTagsIsInited) {
+            return;
+        }
+
+        $this->metaTagsIsInited = true;
         $page = $this->getActivePage();
         if (!$page) {
             return;
@@ -137,9 +157,30 @@ class Component extends BaseComponent
             ]);
         }
 
+        $title = $page->getTitle();
+        if (!empty($title)) {
+            \yii::$app->view->title = $title;
+        }
+
         $description = $page->getDescription();
         if (!empty($description)) {
             \yii::$app->view->registerMetaTag(['name' => 'description', 'content' => $description]);
         }
+    }
+
+    /**
+     * @param $page
+     * @return array|object
+     */
+    protected function createPage($page)
+    {
+        if (is_array($page)) {
+            if (empty($page['class'])) {
+                $page['class'] = Page::class;
+            }
+
+            $page = \yii::createObject($page);
+        }
+        return $page;
     }
 }

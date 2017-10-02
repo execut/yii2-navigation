@@ -8,7 +8,6 @@
 
 namespace execut\navigation\widgets;
 
-use execut\pages\models\Page;
 use yii\base\Widget;
 
 class Header extends Widget

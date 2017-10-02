@@ -53,4 +53,6 @@ interface BasePage
      * @return self
      */
     public function getParentPage();
+
+    public function setParentPage($page);
 }
