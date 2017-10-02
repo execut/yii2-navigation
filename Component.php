@@ -17,6 +17,7 @@ class Component extends BaseComponent
     protected $configurators = [];
 
     public function setActivePage($page) {
+        $this->configure();
         $page = $this->createPage($page);
 
         $this->_activePage = $page;
