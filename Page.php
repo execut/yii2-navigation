@@ -211,6 +211,10 @@ class Page extends Component implements BasePage
     }
 
     protected function extractAttributeValue($attribute) {
-        return ArrayHelper::getValue($this, $attribute);
+        try {
+            return ArrayHelper::getValue($this, $attribute);
+        } catch (\Exception $e) {
+            return '';
+        }
     }
 }
