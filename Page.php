@@ -134,7 +134,7 @@ class Page extends Component implements BasePage
     public function setKeywords($keywords)
     {
         if (is_string($keywords)) {
-            $keywords = explode(',', $keywords);
+            $keywords = array_map(function ($v) {return trim($v);}, explode(',', $keywords));
         }
 
         $this->keywords = $keywords;
