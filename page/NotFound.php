@@ -12,13 +12,16 @@ class NotFound extends Page
 {
     public function __construct($config = [])
     {
-        parent::__construct($config);
-        $this->setName('Not found');
+        $this->setName(\yii::t('execut/navigation', 'Not found'));
+        $notFoundMessage = \yii::t('execut/navigation', 'Page is not found');
+        $aboutMessage = \yii::t('execut/navigation', 'The above error occurred while the Web server was processing your request');
+        $pleaseContactMessage = \yii::t('execut/navigation', 'Please contact us if you think this is a server error. Thank you');
         $this->setText(<<<HTML
-<p>Page is not found.</p>
-<p>The above error occurred while the Web server was processing your request.</p>
-<p>Please contact us if you think this is a server error. Thank you.</p>
+<p>$notFoundMessage.</p>
+<p>$aboutMessage.</p>
+<p>$pleaseContactMessage.</p>
 HTML
 );
+        parent::__construct($config);
     }
 }
