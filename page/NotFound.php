@@ -10,6 +10,7 @@ use execut\navigation\Page;
 
 class NotFound extends Page
 {
+    protected $code = 404;
     public function __construct($config = [])
     {
         $this->setName(\yii::t('execut/navigation', 'Not found'));
@@ -23,5 +24,13 @@ class NotFound extends Page
 HTML
 );
         parent::__construct($config);
+    }
+
+    public function setCode($code) {
+        $this->code = $code;
+    }
+
+    public function getCode() {
+        return $this->code;
     }
 }
