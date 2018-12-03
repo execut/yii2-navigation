@@ -11,7 +11,7 @@ use yii\web\View;
 class Bootstrap extends \execut\yii\Bootstrap
 {
     public $isBootstrapI18n = true;
-    public $defaultDepends = [
+    protected $_defaultDepends = [
         'components' => [
             'navigation' => [
                 'class' => Component::class,
