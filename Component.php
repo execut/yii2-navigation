@@ -72,6 +72,11 @@ class Component extends BaseComponent
         }
     }
 
+    public function reset() {
+        $this->_activePage = null;
+        $this->isConfigured = false;
+    }
+
     public function getTitle() {
         if ($page = $this->getActivePage()) {
             return $page->getTitle();
