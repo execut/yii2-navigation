@@ -16,6 +16,12 @@ class HomePage implements Configurator
 {
     public function configure(Component $navigation)
     {
+        $controller = \yii::$app->controller;
+        $action = $controller->action;
+        if ($action->id === 'error' && ($exception = \Yii::$app->getErrorHandler()->exception) !== null) {
+            return;
+        }
+
         $navigation->addPage([
             'class' => Home::class,
         ]);
