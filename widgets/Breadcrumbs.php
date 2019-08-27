@@ -10,7 +10,10 @@ namespace execut\navigation\widgets;
 
 use execut\navigation\Page;
 use Yii;
+use yii\base\InvalidConfigException;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 class Breadcrumbs extends \yii\widgets\Breadcrumbs {
     public $itemTemplate = '<{itemTag} itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></{itemTag}>{delimiter}';
@@ -53,9 +56,14 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
             }
 
             $position++;
+            if (!empty($link['url'])) {
+                $link['id'] = Url::base(true) . $link['url'];
+            }
+
             $links[$key] = $link;
         }
 
+        unset($links[$key]['url']);
         $this->links = $links;
     }
 
@@ -103,7 +111,24 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
     protected $position = 1;
     public function renderItem($link, $template)
     {
-        $template = parent::renderItem($link, $template);
-        return strtr($template, ['{position}' => $this->position++, '{delimiter}' => $this->delimiter, '{itemTag}' => $this->itemTag]);
+        $encodeLabel = ArrayHelper::remove($link, 'encode', $this->encodeLabels);
+        if (array_key_exists('label', $link)) {
+            $label = $encodeLabel ? Html::encode($link['label']) : $link['label'];
+        } else {
+            throw new InvalidConfigException('The "label" element is required for each link.');
+        }
+        if (isset($link['template'])) {
+            $template = $link['template'];
+        }
+
+        $options = $link;
+        unset($options['template'], $options['label']);
+        if (isset($link['url'])) {
+            $link = Html::a($label, $link['url'], $options);
+        } else {
+            $link = Html::tag('span', $label, $options);
+        }
+
+        return strtr($template, ['{link}' => $link, '{position}' => $this->position++, '{delimiter}' => $this->delimiter, '{itemTag}' => $this->itemTag]);
     }
 }
