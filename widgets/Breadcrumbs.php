@@ -57,7 +57,7 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
 
             $position++;
             if (!empty($link['url'])) {
-                $link['id'] = Url::base(true) . $link['url'];
+                $link['id'] = Url::to($link['url'], true);
             }
 
             $links[$key] = $link;
