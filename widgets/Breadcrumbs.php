@@ -90,22 +90,14 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
             }
 
             $isActive = isset($link['active']);
+            if ($isActive) {
+                unset($link['url']);
+            }
+
             unset($link['active']);
             $links[] = $this->renderItem($link, !$isActive ? $this->itemTemplate : $this->activeItemTemplate);
         }
         echo Html::tag($this->tag, implode('', $links), array_merge($this->options, $this->microdataOptions));
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getActivePage()
-    {
-        /**
-         * @var Page
-         */
-        $page = \yii::$app->navigation->getActivePage();
-        return $page;
     }
 
     protected $position = 1;
