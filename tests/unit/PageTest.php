@@ -14,4 +14,15 @@ class PageTest extends TestCase
         $this->assertEquals($name, $page->getTitle());
         $this->assertEquals($name, $page->getHeader());
     }
+
+    public function testGetNoIndexDefault() {
+        $page = new Page();
+        $this->assertFalse($page->getNoIndex());
+    }
+
+    public function testSetNoIndex() {
+        $page = new Page();
+        $this->assertEquals($page, $page->setNoIndex(true));
+        $this->assertTrue($page->getNoIndex());
+    }
 }

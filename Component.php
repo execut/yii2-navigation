@@ -172,6 +172,13 @@ class Component extends BaseComponent
         if (!empty($description)) {
             \yii::$app->view->registerMetaTag(['name' => 'description', 'content' => $description]);
         }
+
+        if ($page->getNoIndex()) {
+            \yii::$app->view->registerMetaTag([
+                'name' => 'robots',
+                'content' => 'noindex,nofollow'
+            ]);
+        }
     }
 
     /**

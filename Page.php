@@ -23,6 +23,7 @@ class Page extends Component implements BasePage
     protected $url = null;
     protected $time = null;
     protected $parentPage = null;
+    protected $noIndex = false;
 
     /**
      * @return null
@@ -216,5 +217,14 @@ class Page extends Component implements BasePage
         } catch (\Exception $e) {
             return '';
         }
+    }
+
+    public function getNoIndex() {
+        return $this->noIndex;
+    }
+
+    public function setNoIndex(bool $noIndex) {
+        $this->noIndex = $noIndex;
+        return $this;
     }
 }
