@@ -55,4 +55,8 @@ interface BasePage
     public function getParentPage();
 
     public function setParentPage($page);
+
+    public function getNoIndex();
+
+    public function setNoIndex(bool $noIndex);
 }
