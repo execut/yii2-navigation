@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: execut
- * Date: 26.05.16
- * Time: 11:42
+ * @link https://github.com/execut
+ * @copyright Copyright (c) 2020 Yuriy Mamaev (eXeCUT)
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
 namespace execut\navigation;
@@ -12,6 +11,12 @@ use yii\base\Component;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
+/**
+ * Simple implementation of navigation page
+ *
+ * @package execut\navigation
+ * @author Yuriy Mamaev (eXeCUT)
+ */
 class Page extends Component implements BasePage
 {
     protected $title = null;

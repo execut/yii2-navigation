@@ -1,20 +1,24 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: execut
- * Date: 13.10.14
- * Time: 13:54
+ * @link https://github.com/execut
+ * @copyright Copyright (c) 2020 Yuriy Mamaev (eXeCUT)
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
 namespace execut\navigation\widgets;
 
-use execut\navigation\Page;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+/**
+ * Breadcrumbs widget with support of microdata http://schema.org/BreadcrumbList for search engines
+ *
+ * @package execut\navigation
+ * @author Yuriy Mamaev (eXeCUT)
+ */
 class Breadcrumbs extends \yii\widgets\Breadcrumbs {
     public $itemTemplate = '<{itemTag} itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></{itemTag}>{delimiter}';
     /**

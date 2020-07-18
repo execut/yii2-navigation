@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: execut
- * Date: 9/29/17
- * Time: 3:48 PM
+ * @link https://github.com/execut
+ * @copyright Copyright (c) 2020 Yuriy Mamaev (eXeCUT)
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
 namespace execut\navigation\configurator;
@@ -12,6 +11,12 @@ use execut\navigation\Component;
 use execut\navigation\Configurator;
 use execut\navigation\page\Home;
 
+/**
+ * Home page configurator
+ *
+ * @package execut\navigation
+ * @author Yuriy Mamaev (eXeCUT)
+ */
 class HomePage implements Configurator
 {
     public function configure(Component $navigation)

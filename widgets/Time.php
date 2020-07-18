@@ -1,17 +1,20 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: execut
- * Date: 14.01.16
- * Time: 14:33
+ * @link https://github.com/execut
+ * @copyright Copyright (c) 2020 Yuriy Mamaev (eXeCUT)
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
 namespace execut\navigation\widgets;
 
-use execut\pages\models\Page;
 use yii\base\Widget;
-use yii\helpers\Html;
 
+/**
+ * Widget for output a tag of publish time of active page
+ *
+ * @package execut\navigation
+ * @author Yuriy Mamaev (eXeCUT)
+ */
 class Time extends Widget
 {
     public $time = null;

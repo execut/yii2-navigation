@@ -1,13 +1,21 @@
 <?php
 /**
+ * @link https://github.com/execut
+ * @copyright Copyright (c) 2020 Yuriy Mamaev (eXeCUT)
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
 namespace execut\navigation;
 
-
 use yii\di\Container;
 use yii\helpers\ArrayHelper;
 
+/**
+ * Base test class
+ *
+ * @package execut\navigation
+ * @author Yuriy Mamaev (eXeCUT)
+ */
 class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected function mockWebApplication($config = [], $appClass = '\yii\web\Application')

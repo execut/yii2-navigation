@@ -1,5 +1,8 @@
 <?php
 /**
+ * @link https://github.com/execut
+ * @copyright Copyright (c) 2020 Yuriy Mamaev (eXeCUT)
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
 namespace execut\navigation\page;
@@ -8,6 +11,12 @@ namespace execut\navigation\page;
 use Codeception\PHPUnit\ResultPrinter\HTML;
 use execut\navigation\Page;
 
+/**
+ * 404 error page implementation
+ *
+ * @package execut\navigation
+ * @author Yuriy Mamaev (eXeCUT)
+ */
 class NotFound extends Page
 {
     protected $code = 404;

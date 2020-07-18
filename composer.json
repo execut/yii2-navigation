@@ -19,5 +19,8 @@
     "psr-4": {
       "execut\\navigation\\": ""
     }
+  },
+  "extra": {
+    "bootstrap": "execut\\navigation\\Bootstrap"
   }
 }
