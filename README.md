@@ -2,8 +2,8 @@
     <h1 align="center">Yii2 navigation extension</h1>
 </p>
 
-Extension for managing everything related to navigation. Has widgets for display breadcrumbs, SEO tags, menus,
-title and text of the active page according to the given hierarchy. What unties all modules from each other
+Extension for managing everything related to navigation. Has widgets for display breadcrumbs with support microdata scheme, 
+SEO tags, menus, title and text of the active page according to the given hierarchy. What unties all modules from each other
   necessary due to the possibility of dynamic customization.
 
 For license information check the [LICENSE](LICENSE.md)-file.

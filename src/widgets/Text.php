@@ -1,7 +1,7 @@
 <?php
 /**
  * @link https://github.com/execut
- * @copyright Copyright (c) 2020 Yuriy Mamaev (eXeCUT)
+ * @copyright Copyright (c) 2020 Mamaev Yuriy (eXeCUT)
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 namespace execut\navigation\widgets;
@@ -14,7 +14,7 @@ use execut\yii\jui\Widget;
  * Widget for render a html content of active page
  *
  * @package execut\navigation
- * @author Yuriy Mamaev (eXeCUT)
+ * @author Mamaev Yuriy (eXeCUT)
  */
 class Text extends Widget
 {

@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "authors": [
     {
-      "name": "eXeCUT"
+      "name": "Mamaev Yuriy (eXeCUT)"
     }
   ],
   "minimum-stability": "stable",
@@ -17,7 +17,7 @@
   },
   "autoload": {
     "psr-4": {
-      "execut\\navigation\\": ""
+      "execut\\navigation\\": "src"
     }
   },
   "extra": {

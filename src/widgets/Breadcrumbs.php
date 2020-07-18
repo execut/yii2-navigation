@@ -1,7 +1,7 @@
 <?php
 /**
  * @link https://github.com/execut
- * @copyright Copyright (c) 2020 Yuriy Mamaev (eXeCUT)
+ * @copyright Copyright (c) 2020 Mamaev Yuriy (eXeCUT)
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
@@ -17,7 +17,7 @@ use yii\helpers\Url;
  * Breadcrumbs widget with support of microdata http://schema.org/BreadcrumbList for search engines
  *
  * @package execut\navigation
- * @author Yuriy Mamaev (eXeCUT)
+ * @author Mamaev Yuriy (eXeCUT)
  */
 class Breadcrumbs extends \yii\widgets\Breadcrumbs {
     public $itemTemplate = '<{itemTag} itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></{itemTag}>{delimiter}';

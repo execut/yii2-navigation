@@ -1,7 +1,7 @@
 <?php
 /**
  * @link https://github.com/execut
- * @copyright Copyright (c) 2020 Yuriy Mamaev (eXeCUT)
+ * @copyright Copyright (c) 2020 Mamaev Yuriy (eXeCUT)
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
  * Base test class
  *
  * @package execut\navigation
- * @author Yuriy Mamaev (eXeCUT)
+ * @author Mamaev Yuriy (eXeCUT)
  */
 class TestCase extends \PHPUnit\Framework\TestCase
 {

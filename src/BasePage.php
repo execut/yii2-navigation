@@ -1,7 +1,7 @@
 <?php
 /**
  * @link https://github.com/execut
- * @copyright Copyright (c) 2020 Yuriy Mamaev (eXeCUT)
+ * @copyright Copyright (c) 2020 Mamaev Yuriy (eXeCUT)
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
@@ -11,7 +11,7 @@ namespace execut\navigation;
  * Interface BasePage for pages of navigation
  *
  * @package execut\navigation
- * @author Yuriy Mamaev (eXeCUT)
+ * @author Mamaev Yuriy (eXeCUT)
  */
 interface BasePage
 {
@@ -80,5 +80,5 @@ interface BasePage
      * Sets whether pages should be indexed
      * @return boolean True if the page does not need to be indexed by search engines, otherwise false
      */
-    public function setNoIndex(boolean $noIndex);
+    public function setNoIndex(bool $noIndex);
 }
