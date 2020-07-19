@@ -40,8 +40,14 @@ Usage
 ----
 
 For example, the following
-single line of code in a view file would render a text of active page:
+single line of code in a view file would render a common attributes of active page:
 
 ```php
-<?= \execut\navigation\widgets\Text::widget() ?>
+// head
+echo \execut\navigation\widgets\Title::widget();
+// body
+echo \execut\navigation\widgets\Breadcrumbs::widget();
+echo \execut\navigation\widgets\Header::widget();
+echo \execut\navigation\widgets\Text::widget();
+echo \execut\navigation\widgets\Time::widget();
 ```
