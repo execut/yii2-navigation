@@ -2,7 +2,7 @@
 
 # suite for unit (internal) tests.
 # RUN `build` COMMAND AFTER ADDING/REMOVING MODULES.
-
+suite_namespace: execut\navigation\tests\unit
 class_name: CodeGuy
 modules:
     #enabled: [execut\CodeHelper]

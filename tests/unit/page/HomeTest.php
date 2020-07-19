@@ -5,8 +5,9 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
-namespace execut\navigation\page;
+namespace execut\navigation\tests\unit\page;
 
+use execut\navigation\page\Home;
 use execut\navigation\TestCase;
 use yii\i18n\I18N;
 

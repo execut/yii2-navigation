@@ -5,8 +5,11 @@
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
-namespace execut\navigation;
+namespace execut\navigation\tests\unit;
 
+
+use execut\navigation\Page;
+use execut\navigation\TestCase;
 
 /**
  * Test of simple page
