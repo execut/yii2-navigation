@@ -15,7 +15,7 @@ before_script:
   - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
 script:
-  - composer test
+  - composer run
 
 #after_script:
 
