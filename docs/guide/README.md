@@ -121,22 +121,22 @@ Then the page text output will be something like this:
 The time of page change inside the page content is: "2020-07-18 23:03:02"
 ```
 
-Можете реализовать свою реализацию страниц с помощью интерфейса
+You can implement your own implementation of pages using the interface
 [\execut\navigation\BasePage](https://github.com/execut/yii2-navigation/blob/master/src/BasePage.php)
 
-### Настройка меню
+### Menu setting
 
-При желании можно настраивать меню через yii2-navigation путём добавления элементов в них и вывода через виджет меню:
+If desired, you can customize the menu through yii2-navigation by adding elements to them and displaying them through the menu widget:
 ```php
 $navigation = \yii::$app->navigation;
 $navigation->addMenuItem([
-    'label' => 'Название позиции меню',
+    'label' => 'Menu item name',
     'url' => [
         '/menu-item',
     ],
     'items' => [
         [
-            'label' => 'Вложенная позиция меню',
+            'label' => 'Sub item name',
             'url' => [
                 '/menu-sub-item',
             ],
@@ -149,11 +149,11 @@ echo \yii\bootstrap\Nav::widget([
 ]);
 ```
 
-### Конфигураторы
-Для возможности настраивать навигацию из других модулей и инкапсуляции данного функционала в рамках одного класса, в
-yii2-navigation есть поддержка конфигураторов. Пример выше для этих целей можно оформить следующим образом
-[\execut\navigation\configurator\Example](https://github.com/execut/yii2-navigation/blob/master/src/configurator/Example.php)
-и добавить конфигуратор в предзагрузчик своего модуля:
+### Configurators
+To be able to customize navigation from other modules and encapsulate of this functionality within one class, 
+yii2-navigation has support for configurators. The example above for these purposes can be resolved as follows
+[\execut\navigation\configurator\Example](https://github.com/execut/yii2-navigation/blob/master/src/configurator/Example.php).
+Add a configurator to your module preloader:
 ```php
 class Bootstrap implements \yii\base\BootstrapInterface
 {
@@ -165,22 +165,23 @@ class Bootstrap implements \yii\base\BootstrapInterface
 }
 ```
 
-Пример подобного применения можно подсмотреть в модуле [yii2-pages](https://github.com/execut/yii2-pages/blob/master/navigation/Configurator.php).
-Там модуль страниц добавляет активные страницы из БД в навигацию сайта. Этот конфигуратор навигации подключается в
+An example of such an application can be seen in the module [yii2-pages](https://github.com/execut/yii2-pages/blob/master/navigation/Configurator.php).
+There, the pages module adds active pages from the database to the site navigation. This navigation configurator plugs into
 [предзагрузчике модуля Frontend](https://github.com/execut/yii2-pages/blob/master/bootstrap/Frontend.php).
 
-## Типовые страницы
-Реализованы две типовые страницы для стандартных страниц:
-### Домашняя страница
-Используется для обозначения домашней страницы в хлебных крошках. Если вы хотите указать домашнюю страницу
-как родительскую у активной страницы, то перед её добавлением укажите домашнюю:
+## Typical pages
+Two typical pages for standard pages have been implemented:
+### Home page
+Used to refer to the homepage in breadcrumbs. If you want to specify the home page as the parent of the active page,
+then before adding it, specify the home:
 ```php
 $navigation->addPage(new \execut\navigation\page\Home());
 $navigation->addPage($currentPage);
 ```
-И она появится в хлебных крошках как родитель текущей страницы.
+And it will appear in breadcrumbs as the parent of the current page.
 
-Ещё можно к навигации подключить конфугуратор такой страницы в предзагрузке модуля и она будет подключаться ко всем страницам автоматически:
+You can also connect the configurator of such a page to the navigation in the preload of the module, and it will 
+to all pages automatically:
 ```php
 class Bootstrap implements \yii\base\BootstrapInterface
 {
@@ -192,9 +193,9 @@ class Bootstrap implements \yii\base\BootstrapInterface
 }
 ```
 
-### Страница ошибки 404
-В выводе 404 ошибок вы можете указать типовую страницу NotFound, в которой уже заданы все свойства типовой 404
-страницы:
+### 404 error page
+In the output of 404 errors, you can specify a typical NotFound page, which already has all the properties of a typical 404
+pages:
 ```php
 $errorPage = new \execut\navigation\page\NotFound([
     'text' => $exception->getMessage(),
