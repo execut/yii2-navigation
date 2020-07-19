@@ -8,9 +8,9 @@ SEO tags, menus, title and text of the active page according to the given hierar
 
 For license information check the [LICENSE](LICENSE.md)-file.
 
-:uk: documentation is at [docs/guide/README.md](docs/guide/README.md).
+:uk: Documentation is at [docs/guide/README.md](docs/guide/README.md).
 
-:ru: документация здесь [docs/guide-ru/README.md](docs/guide-ru/README.md).
+:ru: Документация здесь [docs/guide-ru/README.md](docs/guide-ru/README.md).
 
 [![Latest Stable Version](https://poser.pugx.org/execut/yii2-navigation/v/stable.png)](https://packagist.org/packages/execut/yii2-navigation)
 [![Total Downloads](https://poser.pugx.org/execut/yii2-navigation/downloads.png)](https://packagist.org/packages/execut/yii2-navigation)

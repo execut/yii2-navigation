@@ -1,23 +1,24 @@
-# execut/yii2-navigation
+# eXeCUT Yii2 navigation
 
-Please, select language:
-[ :uk: **English**](README.md) |
-[ :ru: Русский](../guide-ru/README-ru.md)
+The package provides capabilities for controlling the navigation of your project. Package allows you to do this through a single component
+and provides options for displaying data of the active page from the side of your modules:
+* [Breadcrumbs with schema.org markup support](#breadcrumbs)
+* [Header h1](#header-h1)
+* [Page text](#page-text)
+* [Time of last page modification](#time-of-last-page-modification)
+* [Browser tab title](#browser-tab-title)
+* Meta tags robots, description и keywords
+* [Menu](#menu-setting)
 
-Компонент для управления всем, что касается навигации. Позволяет выводить хлебные крошки, SEO теги, меню,
-заголовок и текст активной страницы согласно заданной иерархии. Позволяет отвязать друг от друга все модули, которым это
- необходимо за счёт возможности динамичной настройки.
+## Install
 
-## Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
-
-### Install
 
 Either run
 
 ```
-$ php composer.phar require execut/yii2-navigation "dev-master"
+php composer.phar require execut/yii2-navigation
 ```
 
 or add
@@ -26,24 +27,17 @@ or add
 "execut/yii2-navigation": "dev-master"
 ```
 
-to the ```require``` section of your `composer.json` file.
+to the require section of your `composer.json` file.
 
 ## Configuration
 
-Чтобы использовать его, необходимо добавить в конфигурационный файл начальную загрузку:
-```php
-return [
-    'bootstrap' => [
-        'yii2-navigation' => [
-            'class' => \execut\navigation\Bootstrap::class,
-        ],
-    ],
-];
-```
+Before starting to use, you need to connect the necessary widgets in the right places of your application for display
+navigation.
 
-Если хотите управлять элементами меню через yii2-navigation, переключите формирование элементов своих меню на компонент yii2-navigation:
+### Menu
+If you want to manage menu items via Yii2 navigation, connect getting your menu items to Yii2 navigation component:
 ```php
-$customItems = [];// Прежние элементы меню
+$customItems = [];// Old menu items
 $menuItems = array_merge($customItems, \yii::$app->navigation->getMenuItems());
 echo \yii\bootstrap\Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
@@ -51,53 +45,59 @@ echo \yii\bootstrap\Nav::widget([
     ]);
 ```
 
-Вывод хлебных крошек с помощью [\execut\navigation\widgets\Breadcrumbs](https://github.com/execut/yii2-navigation/blob/master/widgets/Breadcrumbs.php):
+### Breadcrumbs
+The output of breadcrumbs using a component is done using a next widget
+ [\execut\navigation\widgets\Breadcrumbs](https://github.com/execut/yii2-navigation/blob/master/src/widgets/Breadcrumbs.php):
 ```php
 echo \execut\navigation\widgets\Breadcrumbs::widget();
 ```
 
-Вывод заголовка h1 текущей страницы переключите на виджет [\execut\navigation\widgets\Header](https://github.com/execut/yii2-navigation/blob/master/widgets/Header.php):
+### Header h1
+Rendering the header h1 of current page, replace it with a widget [\execut\navigation\widgets\Header](https://github.com/execut/yii2-navigation/blob/master/src/widgets/Header.php):
 ```php
 echo \execut\navigation\widgets\Header::widget();
 ```
 
-Текст текущей страницы [\execut\navigation\widgets\Text](https://github.com/execut/yii2-navigation/blob/master/widgets/Text.php):
+### Page text
+The text of current page [\execut\navigation\widgets\Text](https://github.com/execut/yii2-navigation/blob/master/src/widgets/Text.php):
 ```php
 echo \execut\navigation\widgets\Text::widget();
 ```
 
-Время модификации активной страницы страницы [\execut\navigation\widgets\Time](https://github.com/execut/yii2-navigation/blob/master/widgets/Time.php):
+### Time of last page modification
+Time of last page modification with schema.org support datePublished attribute [\execut\navigation\widgets\Time](https://github.com/execut/yii2-navigation/blob/master/widgets/Time.php):
 ```php
 echo \execut\navigation\widgets\Time::widget();
 ```
 
-Тег title активной страницы [\execut\navigation\widgets\Title](https://github.com/execut/yii2-navigation/blob/master/widgets/Title.php):
+### Browser tab title
+Tag title of active page [\execut\navigation\widgets\Title](https://github.com/execut/yii2-navigation/blob/master/src/widgets/Title.php):
 ```php
 echo \execut\navigation\widgets\Title::widget();
 ```
 
-Теги keywords и description сформируются во время предзагрузки yii2-navigation.
+Tags of keywords and description is attach when yii2-navigation is bootstrapped.
 
-## Использование
-### Добавление текущей страницы и её родителя
-Чтобы вывести через yii2-navigation страницу, необходимо её обозначить в любом месте вашего приложения перед выводом страницы
-например, в контроллере:
+## Usage
+### Creation of the current page and its parent
+To display a page through yii2-navigation, you need to designate it anywhere in your application before displaying the page
+for example in a controller:
 ```php
 $navigation = \yii::$app->navigation;
 $parentPage = new \execut\navigation\Page([
-    'name' => 'Name родителя',
+    'name' => 'Name of parent page',
     'url' => [
         '/parentPageController',
     ],
 ]);
 $navigation->addPage($parentPage);
 $page = new \execut\navigation\Page([
-    'title' => 'Title страницы',
+    'title' => 'Title page',
     'keywords' => ['Keyword 1', 'Keyword 2'],
-    'description' => 'Description страницы',
-    'text' => 'Текст страницы',
-    'header' => 'Header страницы',
-    'name' => 'Name страницы',
+    'description' => 'Description page',
+    'text' => 'Текст page',
+    'header' => 'Header page',
+    'name' => 'Name page',
     'url' => [
         '/pageController',
     ],
@@ -106,8 +106,23 @@ $page = new \execut\navigation\Page([
 ]);
 $navigation->addPage($page);
 ```
-Пример подключит $parentPage как родитель текущей и выведет его в хлебных крошках. А $page покажется как текущая страница.
+The example will connect $parentPage as the parent of the current page and display it inside breadcrumbs.
+$page is activated as the current page.
 
+The execut\navigation\Page class has support for the simplest templates for the ability to display attribute values in
+values other attributes. For example, in the text of the page it is necessary to substitute the date of its modification.
+To do this, you need to set the following template for page text:
+
+```php
+$page->setText('The time of page change inside the page content is: "{time}"');
+```
+Then the page text output will be something like this:
+```
+The time of page change inside the page content is: "2020-07-18 23:03:02"
+```
+
+Можете реализовать свою реализацию страниц с помощью интерфейса
+[\execut\navigation\BasePage](https://github.com/execut/yii2-navigation/blob/master/src/BasePage.php)
 
 ### Настройка меню
 
@@ -134,36 +149,56 @@ echo \yii\bootstrap\Nav::widget([
 ]);
 ```
 
-### Configurators
-Для возможности настраивать навигацию из других модулей и инкапсуляции данного функционала в классах, в yii2-navigation есть поддержка
-конфигураторов. Пример выше для этих целей можно оформить следующим образом
-[\execut\navigation\configurator\Example](https://github.com/execut/yii2-navigation/blob/master/configurator/Example.php)
-и добавить его в настройку приложения компонента navigation:
+### Конфигураторы
+Для возможности настраивать навигацию из других модулей и инкапсуляции данного функционала в рамках одного класса, в
+yii2-navigation есть поддержка конфигураторов. Пример выше для этих целей можно оформить следующим образом
+[\execut\navigation\configurator\Example](https://github.com/execut/yii2-navigation/blob/master/src/configurator/Example.php)
+и добавить конфигуратор в предзагрузчик своего модуля:
 ```php
-return [
-    'bootstrap' => [
-        'yii2-navigation' => [
-            'class' => \execut\navigation\Bootstrap::class,
-            'depends' => [
-                'components' => [
-                    'navigation' => [
-                        'configurators' => [
-                            'example' => \execut\navigation\configurator\Example::class
-                        ]
-                    ]
-                ]
-            ]
-        ],
-    ],
-];
-```
-или добавить конфигуратор в предзагрузчик своего модуля на лету:
-```php
-\yii::$app->navigation->addConfigurator([
-    'class' => \execut\navigation\configurator\Example::class
-]);
+class Bootstrap implements \yii\base\BootstrapInterface
+{
+    public function bootstrap($app) {
+        $app->navigation->addConfigurator([
+            'class' => \execut\navigation\configurator\Example::class
+        ]);
+    }
+}
 ```
 
 Пример подобного применения можно подсмотреть в модуле [yii2-pages](https://github.com/execut/yii2-pages/blob/master/navigation/Configurator.php).
-Там модуль страниц добавляет активные страницы из БД в навигацию сайта. Конфигуратор навигации подключается в
+Там модуль страниц добавляет активные страницы из БД в навигацию сайта. Этот конфигуратор навигации подключается в
 [предзагрузчике модуля Frontend](https://github.com/execut/yii2-pages/blob/master/bootstrap/Frontend.php).
+
+## Типовые страницы
+Реализованы две типовые страницы для стандартных страниц:
+### Домашняя страница
+Используется для обозначения домашней страницы в хлебных крошках. Если вы хотите указать домашнюю страницу
+как родительскую у активной страницы, то перед её добавлением укажите домашнюю:
+```php
+$navigation->addPage(new \execut\navigation\page\Home());
+$navigation->addPage($currentPage);
+```
+И она появится в хлебных крошках как родитель текущей страницы.
+
+Ещё можно к навигации подключить конфугуратор такой страницы в предзагрузке модуля и она будет подключаться ко всем страницам автоматически:
+```php
+class Bootstrap implements \yii\base\BootstrapInterface
+{
+    public function bootstrap($app) {
+        $app->navigation->addConfigurator([
+            'class' => \execut\navigation\configurator\HomePage::class
+        ]);
+    }
+}
+```
+
+### Страница ошибки 404
+В выводе 404 ошибок вы можете указать типовую страницу NotFound, в которой уже заданы все свойства типовой 404
+страницы:
+```php
+$errorPage = new \execut\navigation\page\NotFound([
+    'text' => $exception->getMessage(),
+    'code' => $exception->getCode(),
+]);
+\yii::$app->navigation->addPage($errorPage);
+```

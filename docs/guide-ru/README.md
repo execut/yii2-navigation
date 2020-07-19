@@ -1,7 +1,7 @@
-# execut/yii2-navigation
+# eXeCUT Yii2 navigation
 
 Пакет предоставляет возможности для управления навигацией вашего проекта. Он позволяет это делать через единый компонент
-и предоставляет возможности для вывода данных активной страницы:
+и предоставляет возможности для вывода данных активной страницы со стороны ваших модулей:
 * [Хлебные крошки с поддержкой микроразметки schema.org](#хлебные-крошки)
 * [Заголовок h1](#заголовок-h1)
 * [Текст страницы](#текст-страницы)
@@ -46,7 +46,8 @@ echo \yii\bootstrap\Nav::widget([
 ```
 
 ### Хлебные крошки
-Вывод хлебных крошек с помощью [\execut\navigation\widgets\Breadcrumbs](https://github.com/execut/yii2-navigation/blob/master/src/widgets/Breadcrumbs.php):
+Вывод хлебных крошек с помощью компонента производится с помощью виджета
+ [\execut\navigation\widgets\Breadcrumbs](https://github.com/execut/yii2-navigation/blob/master/src/widgets/Breadcrumbs.php):
 ```php
 echo \execut\navigation\widgets\Breadcrumbs::widget();
 ```
@@ -117,6 +118,9 @@ $page->setText('Время изменения страницы внутри со
 ```
 Время изменения страницы внутри содержания страницы равно: "2020-07-18 23:03:02"
 ```
+
+Можете реализовать свою реализацию страниц с помощью интерфейса
+[\execut\navigation\BasePage](https://github.com/execut/yii2-navigation/blob/master/src/BasePage.php)
 
 ### Настройка меню
 
