@@ -12,11 +12,11 @@ before_install: phpenv config-rm xdebug.ini
 # Install packages those will be required during build
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --prefer-source
+  - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --dev
 
 script:
-  - vendor/bin/codecept build
-  - vendor/bin/codecept run
+  - ./vendor/bin/codecept build
+  - ./vendor/bin/codecept run
 
 #after_script:
 
