@@ -7,6 +7,7 @@
 
 namespace execut\navigation;
 
+use Codeception\Test\Unit;
 use yii\di\Container;
 use yii\helpers\ArrayHelper;
 
@@ -16,7 +17,7 @@ use yii\helpers\ArrayHelper;
  * @package execut\navigation
  * @author Mamaev Yuriy (eXeCUT)
  */
-class TestCase extends \PHPUnit\Framework\TestCase
+class TestCase extends Unit
 {
     protected function mockWebApplication($config = [], $appClass = '\yii\web\Application')
     {
