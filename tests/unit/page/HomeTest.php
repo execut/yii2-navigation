@@ -24,7 +24,7 @@ class HomeTest extends TestCase
         $this->mockWebApplication([
             'components' => [
                 'i18n' => [
-                    'class' => I18N::class,
+//                    'class' => I18N::class,
                     'translations' => [
                         '*' => [
                             'class' => 'yii\i18n\PhpMessageSource',

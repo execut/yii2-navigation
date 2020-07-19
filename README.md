@@ -39,8 +39,7 @@ to the require section of your `composer.json` file.
 Usage
 ----
 
-For example, the following
-single line of code in a view file would render a common attributes of active page:
+For example, the following few lines of code in a view file would render a common attributes of active page:
 
 ```php
 // head
