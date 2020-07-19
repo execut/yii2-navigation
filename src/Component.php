@@ -18,12 +18,31 @@ use \yii\base\Component as BaseComponent;
 class Component extends BaseComponent
 {
     /**
-     * @var Page|null
+     * @var array Added to navigation menu items
+     */
+    public $menuItems = [];
+    /**
+     * @var BasePage|null Active page
      */
     protected $_activePage = null;
-    public $menuItems = [];
+    /**
+     * @var array Added to navigation configurators
+     */
     protected $configurators = [];
+    /**
+     * @var bool Flag, indicated that existed navigation configurators is already applied
+     */
+    protected $isConfigured = false;
+    /**
+     * @var bool Flag, indicated that meta tags is already initialized
+     */
+    protected $metaTagsIsInited = false;
 
+    /**
+     * Setting active navigation page
+     * @param $page
+     * @return $this
+     */
     public function setActivePage($page) {
         $this->configure();
         $page = $this->createPage($page);
@@ -32,12 +51,22 @@ class Component extends BaseComponent
         return $this;
     }
 
+    /**
+     * Add to navigation many pages at once
+     *
+     * @param BasePage[]|array $pages
+     */
     public function addPages($pages) {
         foreach ($pages as $page) {
             $this->addPage($page);
         }
     }
 
+    /**
+     * Add to navigation single page and set they current active page as parent
+     *
+     * @param array|BasePage $page
+     */
     public function addPage($page) {
         $page = $this->createPage($page);
         $activePage = $this->getActivePage();
@@ -48,18 +77,35 @@ class Component extends BaseComponent
         $this->setActivePage($page);
     }
 
+    /**
+     * Get current active navigation page
+     *
+     * @return BasePage|null
+     */
     public function getActivePage() {
         $this->configure();
 
         return $this->_activePage;
     }
 
+    /**
+     * Set navigation configurators
+     *
+     * @param Configurator|array $configurators
+     * @throws \yii\base\InvalidConfigException
+     */
     public function setConfigurators($configurators) {
         foreach ($configurators as $configurator) {
             $this->addConfigurator($configurator);
         }
     }
 
+    /**
+     * Add single configurator
+     *
+     * @param Configurator|array $configurator
+     * @throws \yii\base\InvalidConfigException
+     */
     public function addConfigurator($configurator) {
         if (is_array($configurator)) {
             $configurator = \yii::createObject($configurator);
@@ -68,7 +114,9 @@ class Component extends BaseComponent
         $this->configurators[] = $configurator;
     }
 
-    protected $isConfigured = false;
+    /**
+     * Configure component via navigation configurators
+     */
     protected function configure() {
         if ($this->isConfigured) {
             return;
@@ -80,35 +128,63 @@ class Component extends BaseComponent
         }
     }
 
+    /**
+     * Reset all component params
+     */
     public function reset() {
         $this->_activePage = null;
         $this->isConfigured = false;
     }
 
+    /**
+     * Getting title of active page
+     *
+     * @return string|null
+     */
     public function getTitle() {
         if ($page = $this->getActivePage()) {
             return $page->getTitle();
         }
     }
 
+    /**
+     * Getting header of active page
+     *
+     * @return string|null
+     */
     public function getHeader() {
         if ($page = $this->getActivePage()) {
             return $page->getHeader();
         }
     }
 
+    /**
+     * Getting text of active page
+     *
+     * @return string|null
+     */
     public function getText() {
         if ($page = $this->getActivePage()) {
             return $page->getText();
         }
     }
 
+    /**
+     * Getting modification time of active page
+     *
+     * @return string|null
+     */
     public function getTime() {
         if ($page = $this->getActivePage()) {
             return $page->getTime();
         }
     }
 
+    /**
+     * Getting a breadcrumbs links of active page for Breadcrumbs widget
+     *
+     * @return array
+     */
     public function getBreadcrumbsLinks() {
         $this->configure();
         $breadcrumbsLinks = [];
@@ -129,6 +205,11 @@ class Component extends BaseComponent
         return $breadcrumbsLinks;
     }
 
+    /**
+     * Add menu item
+     *
+     * @return self
+     */
     public function addMenuItem($item) {
         foreach ($this->menuItems as &$currentItem) {
             if (is_array($currentItem) && is_array($item) && $item['label'] === $currentItem['label']) {
@@ -146,12 +227,19 @@ class Component extends BaseComponent
         return $this;
     }
 
+    /**
+     * Get all menu items for Nav widget
+     *
+     * @return array
+     */
     public function getMenuItems() {
         $this->configure();
         return $this->menuItems;
     }
 
-    protected $metaTagsIsInited = false;
+    /**
+     * Register meta tags of active page to view object
+     */
     public function initMetaTags() {
         if ($this->metaTagsIsInited) {
             return;
@@ -190,8 +278,11 @@ class Component extends BaseComponent
     }
 
     /**
-     * @param $page
-     * @return array|object
+     * Pages factory
+     *
+     * @param BasePage|array $page
+     * @return BasePage
+     * @throws \yii\base\InvalidConfigException
      */
     protected function createPage($page)
     {
@@ -202,6 +293,7 @@ class Component extends BaseComponent
 
             $page = \yii::createObject($page);
         }
+
         return $page;
     }
 }

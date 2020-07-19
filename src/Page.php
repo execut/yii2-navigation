@@ -19,19 +19,50 @@ use yii\helpers\Url;
  */
 class Page extends Component implements BasePage
 {
+    /**
+     * @var null|string Title
+     */
     protected $title = null;
+    /**
+     * @var string|array Array or string of keywords separated by commas
+     */
     protected $keywords = [];
+    /**
+     * @var null|string Description
+     */
     protected $description = null;
+    /**
+     * @var null|string Text
+     */
     protected $text = null;
+    /**
+     * @var null|string Header
+     */
     protected $header = null;
+    /**
+     * @var null|string Page name for menus and breadcrumbs
+     */
     protected $name = null;
+    /**
+     * @var null|string|array Url for \yii\helpers\Url::to()
+     * @see Url::to()
+     */
     protected $url = null;
+    /**
+     * @var null|string Page modification time in format Y-m-d H:i:s
+     */
     protected $time = null;
+    /**
+     * @var null|BasePage Parent page instance
+     */
     protected $parentPage = null;
+    /**
+     * @var bool True if the page does not need to be indexed by search engines, otherwise false
+     */
     protected $noIndex = false;
 
     /**
-     * @return null
+     * @inheritDoc
      */
     public function getKeywords()
     {
@@ -44,7 +75,7 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @return null
+     * @inheritDoc
      */
     public function getUrl()
     {
@@ -52,7 +83,8 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @param null $url
+     * Set page url for \yii\helpers\Url::to()
+     * @param array|string|null $url
      */
     public function setUrl($url)
     {
@@ -64,7 +96,7 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @return null
+     * @inheritDoc
      */
     public function getName()
     {
@@ -72,7 +104,8 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @param null $name
+     * Set page name
+     * @param $name
      */
     public function setName($name)
     {
@@ -87,7 +120,7 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @return null
+     * @inheritDoc
      */
     public function getHeader()
     {
@@ -95,7 +128,8 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @param null $header
+     * Set page header
+     * @param $header
      */
     public function setHeader($header)
     {
@@ -103,7 +137,7 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @return null
+     * @inheritDoc
      */
     public function getText()
     {
@@ -111,7 +145,8 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @param null $text
+     * Set page text
+     * @param $text
      */
     public function setText($text)
     {
@@ -119,7 +154,7 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @return null
+     * @inheritDoc
      */
     public function getDescription()
     {
@@ -127,7 +162,8 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @param null $description
+     * Set page description value
+     * @param $description
      */
     public function setDescription($description)
     {
@@ -135,7 +171,8 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @param null $keywords
+     * Set keywords
+     * @param array|string $keywords Array or string of keywords separated by commas
      */
     public function setKeywords($keywords)
     {
@@ -147,7 +184,7 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @return null
+     * @inheritDoc
      */
     public function getTitle()
     {
@@ -155,7 +192,8 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @param null $title
+     * Set page title string
+     * @param string $title
      */
     public function setTitle($title)
     {
@@ -163,7 +201,7 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @return null
+     * @inheritDoc
      */
     public function getTime()
     {
@@ -171,7 +209,8 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @param null $Time
+     * Set page modification time
+     * @param string|null $time Time in format Y-m-d H:i:s
      */
     public function setTime($time)
     {
@@ -179,7 +218,7 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @return null
+     * @inheritDoc
      */
     public function getParentPage()
     {
@@ -187,7 +226,9 @@ class Page extends Component implements BasePage
     }
 
     /**
-     * @param null $title
+     * Set parent page
+     * @param BasePage|array $page Parent page instance
+     * @throws \Exception
      */
     public function setParentPage($page)
     {
@@ -200,6 +241,27 @@ class Page extends Component implements BasePage
         $this->parentPage = $page;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getNoIndex() {
+        return $this->noIndex;
+    }
+
+    /**
+     * Sets whether pages should be indexed
+     * @return self
+     */
+    public function setNoIndex(bool $noIndex) {
+        $this->noIndex = $noIndex;
+        return $this;
+    }
+
+    /**
+     * Replaced templates values inside string
+     * @param string $template
+     * @return string
+     */
     protected function replaceTemplate($template) {
         $parts = explode('{', $template);
         $result = '';
@@ -216,20 +278,16 @@ class Page extends Component implements BasePage
         return $result;
     }
 
+    /**
+     * Extracting page param by it name
+     * @param $attribute
+     * @return mixed|string|null
+     */
     protected function extractAttributeValue($attribute) {
         try {
             return ArrayHelper::getValue($this, $attribute);
         } catch (\Exception $e) {
             return '';
         }
-    }
-
-    public function getNoIndex() {
-        return $this->noIndex;
-    }
-
-    public function setNoIndex(bool $noIndex) {
-        $this->noIndex = $noIndex;
-        return $this;
     }
 }

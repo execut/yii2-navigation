@@ -17,7 +17,17 @@ use yii\base\Widget;
  */
 class Time extends Widget
 {
+    /**
+     * @var string Time value in format Y-m-d H:i:s
+     */
     public $time = null;
+
+    /**
+     * Renders widget
+     *
+     * @return string
+     * @throws \yii\base\InvalidConfigException
+     */
     public function run() {
         if ($this->time === null) {
             $this->time = \yii::$app->navigation->getTime();

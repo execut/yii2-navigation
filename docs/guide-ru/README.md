@@ -1,11 +1,11 @@
 # execut/yii2-navigation
 
-Компонент для управления всем, что касается навигации. Позволяет управлять навигацией проекта на Yii2 через единую
-прослойку-компонент. Предоставляет возможность для вывода:
-* [Хлебные крошки с поддержкой разметки schema.org](#хлебные-крошки)
+Пакет предоставляет возможности для управления навигацией вашего проекта. Он позволяет это делать через единый компонент
+и предоставляет возможности для вывода данных активной страницы:
+* [Хлебные крошки с поддержкой микроразметки schema.org](#хлебные-крошки)
 * [Заголовок h1](#заголовок-h1)
 * [Текст страницы](#текст-страницы)
-* [Время модификации](#время-модификации)
+* [Время изменения страницы](#время-изменения-страницы)
 * [Заголовок вкладки браузера](#заголовок-вкладки-браузера)
 * Meta-теги robots, description и keywords
 * [Меню](#настройка-меню)
@@ -13,8 +13,6 @@
 ## Установка
 
 Самый простой способ установки это с помощью [composer](http://getcomposer.org/download/).
-
-### Установка
 
 Просто запустите
 
@@ -32,16 +30,8 @@ $ php composer.phar require execut/yii2-navigation "dev-master"
 
 ## Конфигурация
 
-Перед началом использования необходимо добавить в конфигурационный файл начальную загрузку:
-```php
-return [
-    'bootstrap' => [
-        'yii2-navigation' => [
-            'class' => \execut\navigation\Bootstrap::class,
-        ],
-    ],
-];
-```
+Перед началом использования необходимо в нужных местах вашего приложения подключить необходимые виджеты для вывода
+навигации.
 
 ### Меню
 Если хотите управлять элементами меню через yii2-navigation, переключите формирование элементов своих меню на компонент
@@ -56,31 +46,31 @@ echo \yii\bootstrap\Nav::widget([
 ```
 
 ### Хлебные крошки
-Вывод хлебных крошек с помощью [\execut\navigation\widgets\Breadcrumbs](https://github.com/execut/yii2-navigation/blob/master/widgets/Breadcrumbs.php):
+Вывод хлебных крошек с помощью [\execut\navigation\widgets\Breadcrumbs](https://github.com/execut/yii2-navigation/blob/master/src/widgets/Breadcrumbs.php):
 ```php
 echo \execut\navigation\widgets\Breadcrumbs::widget();
 ```
 
 ### Заголовок h1
-Вывод заголовка h1 текущей страницы переключите на виджет [\execut\navigation\widgets\Header](https://github.com/execut/yii2-navigation/blob/master/widgets/Header.php):
+Вывод заголовка h1 текущей страницы переключите на виджет [\execut\navigation\widgets\Header](https://github.com/execut/yii2-navigation/blob/master/src/widgets/Header.php):
 ```php
 echo \execut\navigation\widgets\Header::widget();
 ```
 
 ### Текст страницы
-Текст текущей страницы [\execut\navigation\widgets\Text](https://github.com/execut/yii2-navigation/blob/master/widgets/Text.php):
+Текст текущей страницы [\execut\navigation\widgets\Text](https://github.com/execut/yii2-navigation/blob/master/src/widgets/Text.php):
 ```php
 echo \execut\navigation\widgets\Text::widget();
 ```
 
-### Время модификации
-Время модификации активной страницы страницы [\execut\navigation\widgets\Time](https://github.com/execut/yii2-navigation/blob/master/widgets/Time.php):
+### Время изменения страницы
+Время модификации активной страницы со свойством разметки schema.org datePublished [\execut\navigation\widgets\Time](https://github.com/execut/yii2-navigation/blob/master/widgets/Time.php):
 ```php
 echo \execut\navigation\widgets\Time::widget();
 ```
 
 ### Заголовок вкладки браузера
-Тег title активной страницы [\execut\navigation\widgets\Title](https://github.com/execut/yii2-navigation/blob/master/widgets/Title.php):
+Тег title активной страницы [\execut\navigation\widgets\Title](https://github.com/execut/yii2-navigation/blob/master/src/widgets/Title.php):
 ```php
 echo \execut\navigation\widgets\Title::widget();
 ```
@@ -88,7 +78,7 @@ echo \execut\navigation\widgets\Title::widget();
 Теги keywords и description сформируются во время предзагрузки yii2-navigation.
 
 ## Использование
-### Добавление иерархии текущей страницы
+### Формирование текущей страницы и её родителя
 Чтобы вывести через yii2-navigation страницу, необходимо её обозначить в любом месте вашего приложения перед выводом страницы
 например, в контроллере:
 ```php
@@ -118,8 +108,8 @@ $navigation->addPage($page);
 Пример подключит $parentPage как родитель текущей и выведет его в хлебных крошках. А $page активируется как текущая страница.
 
 У класса execut\navigation\Page есть поддержка простейших шаблонов для возможности вывода значений атрибутов в значениях
-других атрибутов. Например, необходимо указать в тексте страницы её дату изменения. Для этого нужно задать такой шаблон
-тексту страницы:
+других атрибутов. Например, в тексте страницы необходимо подставить дату её изменения. Для этого нужно задать следующий шаблон
+текста страницы:
 ```php
 $page->setText('Время изменения страницы внутри содержания страницы равно: "{time}"');
 ```
@@ -154,37 +144,23 @@ echo \yii\bootstrap\Nav::widget([
 ```
 
 ### Конфигураторы
-Для возможности настраивать навигацию из других модулей и инкапсуляции данного функционала в классах, в yii2-navigation есть поддержка
-конфигураторов. Пример выше для этих целей можно оформить следующим образом
-[\execut\navigation\configurator\Example](https://github.com/execut/yii2-navigation/blob/master/configurator/Example.php)
-и добавить его в настройку приложения компонента navigation:
+Для возможности настраивать навигацию из других модулей и инкапсуляции данного функционала в рамках одного класса, в
+yii2-navigation есть поддержка конфигураторов. Пример выше для этих целей можно оформить следующим образом
+[\execut\navigation\configurator\Example](https://github.com/execut/yii2-navigation/blob/master/src/configurator/Example.php)
+и добавить конфигуратор в предзагрузчик своего модуля:
 ```php
-return [
-    'bootstrap' => [
-        'yii2-navigation' => [
-            'class' => \execut\navigation\Bootstrap::class,
-            'depends' => [
-                'components' => [
-                    'navigation' => [
-                        'configurators' => [
-                            'example' => \execut\navigation\configurator\Example::class
-                        ]
-                    ]
-                ]
-            ]
-        ],
-    ],
-];
-```
-или добавить конфигуратор в предзагрузчик своего модуля на лету:
-```php
-\yii::$app->navigation->addConfigurator([
-    'class' => \execut\navigation\configurator\Example::class
-]);
+class Bootstrap implements \yii\base\BootstrapInterface
+{
+    public function bootstrap($app) {
+        $app->navigation->addConfigurator([
+            'class' => \execut\navigation\configurator\Example::class
+        ]);
+    }
+}
 ```
 
 Пример подобного применения можно подсмотреть в модуле [yii2-pages](https://github.com/execut/yii2-pages/blob/master/navigation/Configurator.php).
-Там модуль страниц добавляет активные страницы из БД в навигацию сайта. Конфигуратор навигации подключается в
+Там модуль страниц добавляет активные страницы из БД в навигацию сайта. Этот конфигуратор навигации подключается в
 [предзагрузчике модуля Frontend](https://github.com/execut/yii2-pages/blob/master/bootstrap/Frontend.php).
 
 ## Типовые страницы
@@ -198,25 +174,16 @@ $navigation->addPage($currentPage);
 ```
 И она появится в хлебных крошках как родитель текущей страницы.
 
-Ещё можно к навигации подключить конфугуратор такой страницы и она будет подключаться ко всем страницам автоматически:
+Ещё можно к навигации подключить конфугуратор такой страницы в предзагрузке модуля и она будет подключаться ко всем страницам автоматически:
 ```php
-
-return [
-    'bootstrap' => [
-        'yii2-navigation' => [
-            'class' => \execut\navigation\Bootstrap::class,
-            'depends' => [
-                'components' => [
-                    'navigation' => [
-                        'configurators' => [
-                            'example' => \execut\navigation\configurator\HomePage::class
-                        ]
-                    ]
-                ]
-            ]
-        ],
-    ],
-];
+class Bootstrap implements \yii\base\BootstrapInterface
+{
+    public function bootstrap($app) {
+        $app->navigation->addConfigurator([
+            'class' => \execut\navigation\configurator\HomePage::class
+        ]);
+    }
+}
 ```
 
 ### Страница ошибки 404

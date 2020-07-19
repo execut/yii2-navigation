@@ -29,7 +29,13 @@ use yii\web\View;
  */
 class Bootstrap extends \execut\yii\Bootstrap
 {
+    /**
+     * @inheritDoc
+     */
     public $isBootstrapI18n = true;
+    /**
+     * @inheritDoc
+     */
     protected $_defaultDepends = [
         'components' => [
             'navigation' => [
@@ -38,6 +44,11 @@ class Bootstrap extends \execut\yii\Bootstrap
         ],
     ];
 
+    /**
+     * Bootstrap inits navigation meta tags
+     *
+     * @param \yii\base\Application $app
+     */
     public function bootstrap($app)
     {
         parent::bootstrap($app);

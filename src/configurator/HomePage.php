@@ -19,6 +19,9 @@ use execut\navigation\page\Home;
  */
 class HomePage implements Configurator
 {
+    /**
+     * @inheritDoc
+     */
     public function configure(Component $navigation)
     {
         $controller = \yii::$app->controller;

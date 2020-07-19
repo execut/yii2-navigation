@@ -20,6 +20,9 @@ use execut\navigation\Page;
  */
 class Example implements Configurator
 {
+    /**
+     * @inheritDoc
+     */
     public function configure(Component $navigation)
     {
         $parentPage = new Page([

@@ -25,36 +25,37 @@ interface BasePage
     /**
      * Returns url of page
      * @return array|string for \yii\helpers\Url::to()
+     * @see Url::to()
      */
     public function getUrl();
 
     /**
      * Returned name for menu item
-     * @return string
+     * @return string|null
      */
     public function getName();
 
     /**
      * Returns header h1
-     * @return string
+     * @return string|null
      */
     public function getHeader();
 
     /**
      * Returns page text html content
-     * @return string
+     * @return string|null
      */
     public function getText();
 
     /**
      * Returns description tag content
-     * @return string
+     * @return string|null
      */
     public function getDescription();
 
     /**
      * Returns title tag content
-     * @return null
+     * @return string|null
      */
     public function getTitle();
 
@@ -66,9 +67,9 @@ interface BasePage
 
     /**
      * Set parent page
-     * @param self $page Parent page
+     * @param self|array $page Parent page
      */
-    public function setParentPage(self $page);
+    public function setParentPage($page);
 
     /**
      * Returns true if the page does not need to be indexed by search engines, otherwise false
@@ -77,8 +78,7 @@ interface BasePage
     public function getNoIndex();
 
     /**
-     * Sets whether pages should be indexed
-     * @return boolean True if the page does not need to be indexed by search engines, otherwise false
+     * @return string|null Page modification time in format Y-m-d H:i:s
      */
-    public function setNoIndex(bool $noIndex);
+    public function getTime();
 }

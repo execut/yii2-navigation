@@ -18,7 +18,16 @@ use yii\helpers\Html;
  */
 class Title extends Widget
 {
+    /**
+     * @var string Title value string
+     */
     public $title = null;
+
+    /**
+     * Renders widget
+     *
+     * @return string
+     */
     public function run() {
         if ($this->title === null) {
             $this->title = \yii::$app->navigation->getTitle();

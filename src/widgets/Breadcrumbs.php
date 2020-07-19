@@ -20,26 +20,55 @@ use yii\helpers\Url;
  * @author Mamaev Yuriy (eXeCUT)
  */
 class Breadcrumbs extends \yii\widgets\Breadcrumbs {
+    /**
+     * @inheritDoc
+     */
     public $itemTemplate = '<{itemTag} itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></{itemTag}>{delimiter}';
     /**
-     * @var string the template used to render each active item in the breadcrumbs. The token `{link}`
-     * will be replaced with the actual HTML link for each active item.
+     * @inheritDoc
      */
     public $activeItemTemplate = '<{itemTag} class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></{itemTag}>';
+    /**
+     * @inheritDoc
+     */
     public $encodeLabels = false;
+    /**
+     * @inheritDoc
+     */
     public $options = [
         'class' => 'breadcrumb pull-right',
     ];
-
+    /**
+     * @var array Microdata options
+     */
     public $microdataOptions = [
         'itemtype' => 'http://schema.org/BreadcrumbList',
         'itemscope' => '',
     ];
-
+    /**
+     * @var string Breadcrumb item html tag
+     */
     public $itemTag = 'li';
+    /**
+     * @var string Between breadcrumbs delimiter
+     */
     public $delimiter = '';
+    /**
+     * @var bool Is render home link
+     */
     public $homeLink = false;
+    /**
+     * @var bool Is render breadcrumbs when they has only alone link
+     */
     public $isRenderAlone = false;
+    /**
+     * @var int Item position counter
+     */
+    protected $position = 1;
+
+    /**
+     * @inheritDoc
+     */
     public function init() {
         parent::init();
         $position = 1;
@@ -104,8 +133,10 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
         echo Html::tag($this->tag, implode('', $links), array_merge($this->options, $this->microdataOptions));
     }
 
-    protected $position = 1;
-    public function renderItem($link, $template)
+    /**
+     * @inheritDoc
+     */
+    protected function renderItem($link, $template)
     {
         $encodeLabel = ArrayHelper::remove($link, 'encode', $this->encodeLabels);
         if (array_key_exists('label', $link)) {

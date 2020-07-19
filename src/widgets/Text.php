@@ -18,7 +18,16 @@ use execut\yii\jui\Widget;
  */
 class Text extends Widget
 {
+    /**
+     * @var string Text value
+     */
     public $text = null;
+
+    /**
+     * Renders widget
+     *
+     * @return string
+     */
     public function run() {
         if ($this->text === null) {
             $this->text = \yii::$app->navigation->getText();

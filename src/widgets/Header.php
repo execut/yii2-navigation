@@ -17,7 +17,16 @@ use yii\base\Widget;
  */
 class Header extends Widget
 {
+    /**
+     * @var string Header value
+     */
     public $header = null;
+
+    /**
+     * Renders widget
+     *
+     * @return string
+     */
     public function run() {
         if ($this->header === null) {
             $this->header = \yii::$app->navigation->getHeader();
