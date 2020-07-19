@@ -15,8 +15,8 @@ before_script:
   - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
 script:
-  - codecept build
-  - codecept run
+  - vendor/bin/codecept build
+  - vendor/bin/codecept run
 
 #after_script:
 

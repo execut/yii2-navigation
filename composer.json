@@ -15,6 +15,10 @@
     "yiisoft/yii2": "@dev",
     "yiisoft/yii2-jui": "@dev"
   },
+  "require-dev": {
+    "yiisoft/yii2-codeception": "~2.0.0",
+    "codeception/codeception": "2.0.*"
+  },
   "autoload": {
     "psr-4": {
       "execut\\navigation\\": "src"
