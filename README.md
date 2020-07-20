@@ -14,7 +14,7 @@ English documentation is at [docs/guide/README.md](https://github.com/execut/yii
 
 [![Latest Stable Version](https://poser.pugx.org/execut/yii2-navigation/v/stable.png)](https://packagist.org/packages/execut/yii2-navigation)
 [![Total Downloads](https://poser.pugx.org/execut/yii2-navigation/downloads.png)](https://packagist.org/packages/execut/yii2-navigation)
-[![Build Status](https://travis-ci.com/execut/yii2-navigation.svg?branch=master)](https://travis-ci.com/yiisoft/execut/yii2-navigation)
+[![Build Status](https://travis-ci.com/execut/yii2-navigation.svg?branch=master)](https://travis-ci.com/execut/yii2-navigation)
 
 
 Installation
