@@ -52,8 +52,14 @@ class Bootstrap extends \execut\yii\Bootstrap
     public function bootstrap($app)
     {
         parent::bootstrap($app);
+        $this->bootstrapI18n($app);
         Event::on(View::class, View::EVENT_END_BODY, function () {
             \yii::$app->navigation->initMetaTags();
         });
+    }
+
+    protected function getModuleFolderName()
+    {
+        return 'yii2-navigation/src';
     }
 }
