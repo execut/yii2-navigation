@@ -5,6 +5,11 @@
   "homepage": "https://github.com/execut/yii2-navigation",
   "type": "yii2-extension",
   "license": "Apache-2.0",
+  "support": {
+    "issues": "https://github.com/execut/yii2-navigation/issues?state=open",
+    "wiki": "https://github.com/execut/yii2-navigation/wiki",
+    "source": "https://github.com/execut/yii2-navigation"
+  },
   "authors": [
     {
       "name": "Mamaev Yuriy (eXeCUT)"
