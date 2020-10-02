@@ -123,8 +123,11 @@ class Component extends BaseComponent
                     $currentItem['items'] = [];
                 }
 
-                $currentItem['items'] = array_merge($currentItem['items'], $item['items']);
-                return;
+                if (!empty($item['items'])) {
+                    $currentItem['items'] = array_merge($currentItem['items'], $item['items']);
+                }
+
+                return $this;
             }
         }
 
