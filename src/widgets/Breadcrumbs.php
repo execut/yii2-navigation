@@ -1,38 +1,74 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: execut
- * Date: 13.10.14
- * Time: 13:54
+ * @link https://github.com/execut
+ * @copyright Copyright (c) 2020 Mamaev Yuriy (eXeCUT)
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
 namespace execut\navigation\widgets;
 
-use execut\navigation\Page;
 use Yii;
+use yii\base\InvalidConfigException;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
+/**
+ * Breadcrumbs widget with support of microdata http://schema.org/BreadcrumbList for search engines
+ *
+ * @package execut\navigation
+ * @author Mamaev Yuriy (eXeCUT)
+ */
 class Breadcrumbs extends \yii\widgets\Breadcrumbs {
+    /**
+     * @inheritDoc
+     */
     public $itemTemplate = '<{itemTag} itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></{itemTag}>{delimiter}';
     /**
-     * @var string the template used to render each active item in the breadcrumbs. The token `{link}`
-     * will be replaced with the actual HTML link for each active item.
+     * @inheritDoc
      */
     public $activeItemTemplate = '<{itemTag} class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">{link}<meta itemprop="position" content="{position}" /></{itemTag}>';
+    /**
+     * @inheritDoc
+     */
     public $encodeLabels = false;
+    /**
+     * @inheritDoc
+     */
     public $options = [
         'class' => 'breadcrumb pull-right',
     ];
-
+    /**
+     * @var array Microdata options
+     */
     public $microdataOptions = [
         'itemtype' => 'http://schema.org/BreadcrumbList',
         'itemscope' => '',
     ];
-
+    /**
+     * @var string Breadcrumb item html tag
+     */
     public $itemTag = 'li';
+    /**
+     * @var string Between breadcrumbs delimiter
+     */
     public $delimiter = '';
+    /**
+     * @var bool Is render home link
+     */
     public $homeLink = false;
+    /**
+     * @var bool Is render breadcrumbs when they has only alone link
+     */
     public $isRenderAlone = false;
+    /**
+     * @var int Item position counter
+     */
+    protected $position = 1;
+
+    /**
+     * @inheritDoc
+     */
     public function init() {
         parent::init();
         $position = 1;
@@ -53,9 +89,14 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
             }
 
             $position++;
+            if (!empty($link['url'])) {
+                $link['id'] = Url::to($link['url'], true);
+            }
+
             $links[$key] = $link;
         }
 
+        unset($links[$key]['url']);
         $this->links = $links;
     }
 
@@ -82,6 +123,10 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
             }
 
             $isActive = isset($link['active']);
+            if ($isActive) {
+                unset($link['url']);
+            }
+
             unset($link['active']);
             $links[] = $this->renderItem($link, !$isActive ? $this->itemTemplate : $this->activeItemTemplate);
         }
@@ -89,21 +134,28 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs {
     }
 
     /**
-     * @return mixed
+     * @inheritDoc
      */
-    protected function getActivePage()
+    protected function renderItem($link, $template)
     {
-        /**
-         * @var Page
-         */
-        $page = \yii::$app->navigation->getActivePage();
-        return $page;
-    }
+        $encodeLabel = ArrayHelper::remove($link, 'encode', $this->encodeLabels);
+        if (array_key_exists('label', $link)) {
+            $label = $encodeLabel ? Html::encode($link['label']) : $link['label'];
+        } else {
+            throw new InvalidConfigException('The "label" element is required for each link.');
+        }
+        if (isset($link['template'])) {
+            $template = $link['template'];
+        }
 
-    protected $position = 1;
-    public function renderItem($link, $template)
-    {
-        $template = parent::renderItem($link, $template);
-        return strtr($template, ['{position}' => $this->position++, '{delimiter}' => $this->delimiter, '{itemTag}' => $this->itemTag]);
+        $options = $link;
+        unset($options['template'], $options['label']);
+        if (isset($link['url'])) {
+            $link = Html::a($label, $link['url'], $options);
+        } else {
+            $link = Html::tag('span', $label, $options);
+        }
+
+        return strtr($template, ['{link}' => $link, '{position}' => $this->position++, '{delimiter}' => $this->delimiter, '{itemTag}' => $this->itemTag]);
     }
 }

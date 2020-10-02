@@ -1,10 +1,22 @@
 <?php
 /**
+ * @link https://github.com/execut
+ * @copyright Copyright (c) 2020 Mamaev Yuriy (eXeCUT)
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
-namespace execut\navigation;
+namespace execut\navigation\tests\unit;
 
 
+use execut\navigation\Page;
+use execut\navigation\TestCase;
+
+/**
+ * Test of simple page
+ *
+ * @package execut\navigation
+ * @author Mamaev Yuriy (eXeCUT)
+ */
 class PageTest extends TestCase
 {
     public function testSetName() {
@@ -13,5 +25,16 @@ class PageTest extends TestCase
         $page->setName('test');
         $this->assertEquals($name, $page->getTitle());
         $this->assertEquals($name, $page->getHeader());
+    }
+
+    public function testGetNoIndexDefault() {
+        $page = new Page();
+        $this->assertFalse($page->getNoIndex());
+    }
+
+    public function testSetNoIndex() {
+        $page = new Page();
+        $this->assertEquals($page, $page->setNoIndex(true));
+        $this->assertTrue($page->getNoIndex());
     }
 }
